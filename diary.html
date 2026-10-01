@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="ne" translate="no">
+<head>
+<meta charset="UTF-8">
+<meta name="google" content="notranslate">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>पाथिभरा दूध डेरी</title>
+<style>
+/* ===== 1. COLORS & FONTS (change colors here) ===== */
+:root{--ink:#1d2b36;--mut:#5f7380;--line:#d9e4ec;--blue:#1e6fd9;--blue-d:#154fa0;--teal:#00a08a;--orange:#f28c28;--purple:#7e57c2;--red:#d6453d;--r:16px;--sh:0 3px 12px rgba(30,60,90,.12)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:flex;flex-direction:column;background:linear-gradient(160deg,#e8f3ff,#eafaf3 55%,#fff6e8);color:var(--ink);font-family:"Noto Sans Devanagari","Nirmala UI","Mangal","Segoe UI",system-ui,sans-serif;font-size:16px;line-height:1.5}
+#main{flex:1;width:100%;max-width:1200px;margin:auto;padding:14px}
+/* ===== 2. HEADER & FOOTER (header is fixed — it is never redrawn, so no flashing) ===== */
+header{background:linear-gradient(110deg,#154fa0,#1e88c9 55%,#00a08a);color:#fff;box-shadow:var(--sh)}
+header .in{max-width:1200px;margin:auto;padding:14px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.brand{display:flex;gap:12px;align-items:center}
+.logo{width:56px;height:56px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:30px;box-shadow:0 0 0 3px rgba(255,255,255,.4)}
+.brand h1{margin:0;font-size:26px;line-height:1.2}.brand small{opacity:.9}
+.date{background:rgba(255,255,255,.18);padding:8px 16px;border-radius:14px;line-height:1.45;min-width:230px}
+.date .dn{font-size:13px;opacity:.95}.date .db{font-size:19px;font-weight:700}.date .da{font-size:14px}
+.lang button{border:0;background:rgba(255,255,255,.2);color:#fff;padding:7px 16px;cursor:pointer;font:inherit}
+.lang button:first-child{border-radius:20px 0 0 20px}.lang button:last-child{border-radius:0 20px 20px 0}
+.lang .on{background:#fff;color:var(--blue-d);font-weight:700}
+footer{text-align:center;padding:12px;background:linear-gradient(110deg,#154fa0,#00a08a);color:#fff;font-weight:700;letter-spacing:2px}
+/* ===== 3. CARDS, BUTTONS, FORMS ===== */
+.card{background:#fff;border-radius:var(--r);box-shadow:var(--sh);padding:18px;margin:16px 0;border-top:5px solid var(--blue)}
+.card.c2{border-color:var(--teal)}.card.c3{border-color:var(--orange)}.card.c4{border-color:var(--purple)}
+h2{margin:0 0 12px;font-size:20px}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+button.b{border:0;border-radius:10px;padding:9px 16px;cursor:pointer;font:inherit;background:var(--blue);color:#fff;transition:transform .1s,filter .2s}
+button.b:hover{filter:brightness(1.1);transform:translateY(-1px)}
+button.g{background:var(--teal)}button.or{background:var(--orange)}button.o{background:#fff;color:var(--blue);border:2px solid var(--blue)}button.d{background:#fff;color:var(--red);border:2px solid var(--red)}
+button.s{padding:5px 11px;font-size:14px}
+input,select{font:inherit;padding:8px 9px;border:2px solid var(--line);border-radius:9px;background:#fff;width:100%;min-width:0}
+input:focus,select:focus{outline:none;border-color:var(--blue)}
+.search{max-width:360px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.mem{border-radius:var(--r);padding:14px;background:#f4faff;border-left:6px solid var(--teal);transition:transform .15s,box-shadow .15s}
+.mem:hover{transform:translateY(-3px);box-shadow:var(--sh)}
+.mem.buf{background:#f6f1ff;border-color:var(--purple)}
+.mem h3{margin:0 0 4px}
+.tag{display:inline-block;padding:2px 12px;border-radius:12px;background:#d7f4ec;color:#00785f;font-size:14px}
+.tag.buf{background:#e6dcfa;color:#5a3ea0}
+.acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+/* ===== 4. TABLES ===== */
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+th{background:#dcecff;color:var(--blue-d);position:sticky;top:0}
+td input{min-width:120px}
+tbody tr:nth-child(even){background:#fafcff}
+.newrow{background:#fff6e6!important}
+/* ===== 5. SUMMARY BOXES ===== */
+.sum{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:12px}
+.st{border-radius:14px;padding:12px;background:#e3f2fd}.st span{display:block;color:var(--mut);font-size:14px}.st b{font-size:21px}
+.st:nth-child(6n+2){background:#fff1de}.st:nth-child(6n+3){background:#e0f7f1}.st:nth-child(6n+4){background:#f0e8fc}.st:nth-child(6n+5){background:#ffe6ee}.st:nth-child(6n+6){background:#fff9d8}
+.st.big{background:linear-gradient(120deg,#1e6fd9,#00a08a);color:#fff}.st.big span{color:#e3f4ff}
+.calc{background:#fffaf0;border:2px dashed var(--orange);border-radius:14px;padding:14px;line-height:2}
+.calc .fin{font-size:22px;font-weight:700;color:var(--teal);border-top:2px solid var(--line);margin-top:6px;padding-top:6px}
+.calc .fin.neg{color:var(--red)}
+.row{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.fillbox{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px}.fillbox input{max-width:240px}
+/* ===== 6. POPUP ===== */
+#modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:9;place-items:center;padding:16px}
+#modal.show{display:grid}
+.box{background:#fff;border-radius:var(--r);padding:22px;width:100%;max-width:420px;border-top:6px solid var(--teal);animation:pop .2s}
+@keyframes pop{from{transform:scale(.95);opacity:0}}
+.box label{display:block;margin:10px 0 3px;font-size:14px;color:var(--mut)}
+.empty{color:var(--mut);text-align:center;padding:20px}
+#print{display:none}
+@media print{body>*:not(#print){display:none!important}#print{display:block;padding:10px}#print table{font-size:11px}#print th{position:static}}
+@media(max-width:600px){.brand h1{font-size:20px}.date{min-width:0;width:100%}}
+</style>
+</head>
+<body translate="no">
+
+<!-- HEADER: written once here and never redrawn by the app, so it cannot flash -->
+<header><div class="in">
+  <div class="brand"><div class="logo">🥛</div><div><h1>पाथिभरा दूध डेरी</h1><small>Pathibhara Dudh Dairy</small></div></div>
+  <div class="date" id="dateBox"></div>
+  <div class="lang"><button id="btn-ne" onclick="setLang('ne')">नेपाली</button><button id="btn-en" onclick="setLang('en')">English</button></div>
+</div></header>
+
+<div id="main"></div>
+<footer>CREATED BY SAMYAM</footer>
+<div id="modal"></div>
+<div id="print"></div>
+
+<script>
+/* =====================================================
+   1. TRANSLATIONS — each line: key:[Nepali, English]
+   ===================================================== */
+const T={
+add:['+ सदस्य थप्नुहोस्','+ Add Member'],search:['सदस्य खोज्नुहोस्...','Search member...'],
+members:['सदस्यहरू','Members'],all:['सबै सदस्यको सारांश','All Members Summary'],
+name:['नाम','Name'],phone:['फोन (ऐच्छिक)','Phone (optional)'],mtype:['दूधको प्रकार','Milk type'],
+cow:['गाईको दूध','Cow Milk'],buf:['भैंसीको दूध','Buffalo Milk'],
+save:['सुरक्षित गर्नुहोस्','Save'],cancel:['रद्द','Cancel'],edit:['सम्पादन','Edit'],del:['मेटाउनुहोस्','Delete'],
+view:['रेकर्ड हेर्नुहोस्','View Record'],details:['विवरण हेर्नुहोस्','View Details'],back:['← फर्कनुहोस्','← Back'],
+none:['कुनै सदस्य छैन। माथिको बटन थिचेर थप्नुहोस्।','No members yet. Click Add Member to start.'],
+rec:['३२ दिनको दूध रेकर्ड','32-Day Milk Record'],day:['दिन','Day'],
+bs:['मिति (वि.सं.)','Date (B.S.)'],ad:['मिति (ई.सं.)','Date (A.D.)'],
+am:['बिहान (लि.)','Morning (L)'],pm:['साँझ (लि.)','Evening (L)'],dt:['दैनिक जम्मा','Daily Total'],
+msum:['दूध सारांश','Milk Summary'],amT:['बिहान जम्मा','Morning Total'],pmT:['साँझ जम्मा','Evening Total'],
+tot:['जम्मा दूध','Total Milk'],rate:['दर','Rate'],amt:['जम्मा रकम','Total Amount'],
+other:['अन्य','Other'],type:['प्रकार','Type'],qty:['परिमाण','Quantity'],unit:['एकाइ','Unit'],amtR:['रकम (रु.)','Amount (Rs.)'],note:['टिप्पणी','Notes'],
+addtx:['+ थप्नुहोस्','+ Add'],today:['आज','Today'],
+dahi:['दही','Dahi'],mohi:['मोही','Mohi'],paneer:['पनीर','Paneer'],cash:['नगद','Cash'],dana:['दाना','Dana'],oth:['अन्य','Other'],
+fin:['अन्तिम हिसाब','Final Balance'],mAmt:['दूधको रकम','Milk amount'],
+pay:['सदस्यलाई तिर्नुपर्ने रकम','Payable to member'],owe:['सदस्यले डेरीलाई तिर्नुपर्ने','Member owes the dairy'],
+print:['🖨 सारांश प्रिन्ट','🖨 Print Summary'],mem:['सदस्य','Member'],
+tM:['जम्मा सदस्य','Total members'],tCow:['जम्मा गाईको दूध','Total cow milk'],tBuf:['जम्मा भैंसीको दूध','Total buffalo milk'],tPay:['जम्मा दूधको रकम','Total payable milk amount'],
+cf:['यो सदस्य मेटाउने?','Delete this member?'],ph:['२०८३/०६/१५','2083/06/15'],clr:['खाली गर्नुहोस्','Clear'],
+start:['सुरु मिति (वि.सं.)','Start date (B.S.)'],fill:['३२ दिनको मिति आफै भर्नुहोस्','Auto-fill 32 dates'],
+hint:['वि.सं. लेख्दा ई.सं. आफै भरिन्छ, र ई.सं. छान्दा वि.सं. आफै भरिन्छ।','Type B.S. and A.D. fills itself — or pick A.D. and B.S. fills itself.'],
+badDate:['सही वि.सं. मिति लेख्नुहोस् (२०८२–२०९०)','Enter a valid B.S. date (2082–2090)']
+};
+const RATE={cow:65,buf:75};                       // price per litre — change here if rates change
+const TXTYPES=['dahi','mohi','paneer','cash','dana','oth'];
+// Names for the header date
+const WD=[['आइतबार','Sunday'],['सोमबार','Monday'],['मंगलबार','Tuesday'],['बुधबार','Wednesday'],['बिहीबार','Thursday'],['शुक्रबार','Friday'],['शनिबार','Saturday']];
+const BSN=[['बैशाख','Baisakh'],['जेठ','Jestha'],['असार','Ashadh'],['श्रावण','Shrawan'],['भदौ','Bhadra'],['असोज','Ashwin'],['कार्तिक','Kartik'],['मंसिर','Mangsir'],['पुष','Poush'],['माघ','Magh'],['फागुन','Falgun'],['चैत','Chaitra']];
+const ADN=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+/* =====================================================
+   2. BIKRAM SAMBAT (B.S.) CALENDAR
+   Days in each of the 12 months for B.S. 2082 … 2090.
+   Anchor: 2083/01/01 B.S. = 14 April 2026 A.D.
+   (so 2082/01/01 B.S. = 14 April 2025 A.D.)
+   Check: 1 Oct 2026 A.D. = 2083/06/15 B.S. (Ashwin 15)
+   ===================================================== */
+const BS0=2082, BS1=2090;
+const BSM=[
+[31,31,32,31,31,30,30,30,29,30,30,30],   // 2082
+[31,31,32,31,31,30,30,30,29,30,30,30],   // 2083
+[31,31,32,31,31,30,30,30,29,30,30,30],   // 2084
+[31,32,31,32,30,31,30,30,29,30,30,30],   // 2085
+[30,32,31,32,31,30,30,30,29,30,30,30],   // 2086
+[31,31,32,31,31,31,30,30,29,30,30,30],   // 2087
+[30,31,32,32,30,31,30,30,29,30,30,30],   // 2088
+[30,32,31,32,31,30,30,30,29,30,30,30],   // 2089
+[30,32,31,32,31,30,30,30,29,30,30,30]    // 2090
+];
+const BASE=Date.UTC(2025,3,14), DAY=864e5;      // 2082/01/01 B.S. = 2025-04-14 A.D.
+const pad=x=>String(x).padStart(2,'0');
+const asc=s=>String(s??'').replace(/[०-९]/g,c=>'०१२३४५६७८९'.indexOf(c));   // Nepali digits -> English digits
+// Read text like "2083/06/15" → [y,m,d] or null if invalid
+function parseBS(s){
+  const p=asc(s).trim().split(/[\/\-.]/).map(Number);
+  if(p.length!=3||p.some(isNaN))return null;
+  const[y,m,d]=p,r=BSM[y-BS0];
+  return(!r||m<1||m>12||d<1||d>r[m-1])?null:[y,m,d];
+}
+// B.S. → A.D. (returns "YYYY-MM-DD")
+function bsToAd(y,m,d){
+  let t=0;
+  for(let i=BS0;i<y;i++)t+=BSM[i-BS0].reduce((a,b)=>a+b,0);
+  for(let i=0;i<m-1;i++)t+=BSM[y-BS0][i];
+  return new Date(BASE+(t+d-1)*DAY).toISOString().slice(0,10);
+}
+// A.D. (Date object in UTC) → B.S. text "YYYY/MM/DD" or null
+function adToBs(dt){
+  let t=Math.round((dt-BASE)/DAY);if(t<0)return null;
+  for(let y=BS0;y<=BS1;y++)for(let m=0;m<12;m++){
+    if(t<BSM[y-BS0][m])return y+'/'+pad(m+1)+'/'+pad(t+1);
+    t-=BSM[y-BS0][m];
+  }
+  return null;
+}
+// Today's date as a UTC Date (uses the computer's local day)
+function todayUTC(){const t=new Date();return new Date(Date.UTC(t.getFullYear(),t.getMonth(),t.getDate()))}
+
+/* =====================================================
+   3. STATE + LOCALSTORAGE (save / load / update / delete)
+   ===================================================== */
+const KEY='pathibhara_dairy_v1';
+let S={lang:'ne',members:[]};          // S = all saved data
+let view='list',cur=null,q='';         // current screen, open member, search text
+let X={bs:'',ad:''};                   // date typed in the "add other transaction" row
+
+function loadData(){
+  try{
+    const d=JSON.parse(localStorage.getItem(KEY));
+    if(d&&d.members){S=d;
+      // old records had one "date" field — convert to bs/ad fields
+      S.members.forEach(m=>{[...m.days,...m.tx].forEach(x=>{if(x.bs===undefined){x.bs=x.date||'';x.ad=''}})});}
+  }catch(e){}
+}
+function saveData(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){alert('Could not save')}}
+const blankDay=()=>({bs:'',ad:'',am:'',pm:''});
+function addMember(name,phone,type){S.members.push({id:Date.now(),name,phone,type,days:Array.from({length:32},blankDay),tx:[]});saveData()}
+function updateMember(id,name,phone,type){const m=getM(id);m.name=name;m.phone=phone;m.type=type;saveData()}
+function deleteMember(id){S.members=S.members.filter(m=>m.id!==id);saveData()}
+
+/* =====================================================
+   4. HELPERS
+   ===================================================== */
+const L=k=>T[k][S.lang=='ne'?0:1];
+const n=v=>parseFloat(v)||0;
+const $=id=>document.getElementById(id);
+const getM=(id=cur)=>S.members.find(m=>m.id==id);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const nd=x=>S.lang=='ne'?String(x).replace(/\d/g,d=>'०१२३४५६७८९'[d]):String(x);   // show Nepali digits in Nepali mode
+const fmt=x=>nd((Math.round(x*100)/100).toLocaleString('en-IN'));
+const mname=t=>L(t);
+
+// All totals for one member come from here
+function calc(m){
+  const am=m.days.reduce((s,d)=>s+n(d.am),0),pm=m.days.reduce((s,d)=>s+n(d.pm),0);
+  const total=am+pm,rate=RATE[m.type],milkAmt=total*rate;
+  const by={};m.tx.forEach(t=>by[t.type]=(by[t.type]||0)+n(t.amt));
+  const ded=Object.values(by).reduce((a,b)=>a+b,0);
+  return{am,pm,total,rate,milkAmt,by,ded,bal:milkAmt-ded};
+}
+
+/* ---- Linked B.S. ⇄ A.D. date boxes ----
+   kind: 'd' = milk day row, 't' = transaction row, 'n' = new transaction row */
+function setDate(kind,idx,src,el){
+  const o=kind=='d'?getM().days[idx]:kind=='t'?getM().tx.find(x=>x.id==idx):X;
+  const id=kind+idx;
+  if(src=='bs'){
+    o.bs=asc(el.value);const p=parseBS(o.bs);
+    if(p){o.ad=bsToAd(...p);$('ad'+id).value=o.ad}
+  }else{
+    o.ad=el.value;
+    const b=el.value?adToBs(new Date(el.value+'T00:00:00Z')):null;
+    if(b){o.bs=b;$('bs'+id).value=nd(b)}
+  }
+  if(kind!='n')saveData();
+}
+// the pair of date inputs used in tables (extra = optional button under the B.S. box)
+const dateCells=(kind,idx,o,extra='')=>`<td><input id="bs${kind}${idx}" value="${esc(nd(o.bs))}" placeholder="${L('ph')}" oninput="setDate('${kind}',${idx},'bs',this)">${extra}</td>
+<td><input type="date" id="ad${kind}${idx}" value="${esc(o.ad)}" oninput="setDate('${kind}',${idx},'ad',this)"></td>`;
+
+/* =====================================================
+   5. HEADER (date + language buttons) — updated in place, never rebuilt
+   ===================================================== */
+let lastHead='';
+function updateHeader(){
+  const u=todayUTC(),bs=adToBs(u),i=S.lang=='ne'?0:1;
+  let b='';
+  if(bs){const[y,m,d]=bs.split('/').map(Number);b=(i?'B.S. ':'वि.सं. ')+nd(y)+' '+BSN[m-1][i]+' '+nd(d)}
+  const a=(i?'A.D. ':'ई.सं. ')+nd(u.getUTCDate())+' '+ADN[u.getUTCMonth()]+' '+nd(u.getUTCFullYear());
+  const html=`<div class="dn">📅 ${WD[u.getUTCDay()][i]}</div><div class="db">${b}</div><div class="da">${a}</div>`;
+  if(html!==lastHead){$('dateBox').innerHTML=html;lastHead=html}   // only touches the page if the text changed
+  $('btn-ne').className=S.lang=='ne'?'on':'';$('btn-en').className=S.lang=='en'?'on':'';
+}
+setInterval(updateHeader,30000);   // keeps the date correct, even after midnight
+
+/* =====================================================
+   6. MAIN PAGE
+   ===================================================== */
+function render(){
+  $('main').innerHTML=view=='list'?listView():detailView();
+  if(view=='list')renderLists();else renderSummary();
+  updateHeader();
+}
+function setLang(l){S.lang=l;saveData();render()}
+
+/* ---------- Dashboard ---------- */
+function listView(){return`
+  <div class="card c2"><div class="bar">
+    <input class="search" value="${esc(q)}" placeholder="🔍 ${L('search')}" oninput="q=this.value;renderLists()">
+    <button class="b g" onclick="openMember()">${L('add')}</button></div></div>
+  <div class="card"><h2>🐄 ${L('members')}</h2><div id="mlist"></div></div>
+  <div class="card c3"><h2>📊 ${L('all')}</h2><div id="allsum"></div></div>`}
+
+// Redraws only the lists, so typing in the search box keeps working
+function renderLists(){
+  const f=S.members.filter(m=>m.name.toLowerCase().includes(q.trim().toLowerCase()));
+  $('mlist').innerHTML=f.length?`<div class="grid">${f.map(m=>`
+    <div class="mem ${m.type}"><h3>${esc(m.name)}</h3>
+      <span class="tag ${m.type}">${mname(m.type)}</span>${m.phone?` <small>📞 ${esc(m.phone)}</small>`:''}
+      <div class="acts"><button class="b s" onclick="openRecord(${m.id})">${L('view')}</button>
+      <button class="b s o" onclick="openMember(${m.id})">${L('edit')}</button>
+      <button class="b s d" onclick="delMember(${m.id})">${L('del')}</button></div></div>`).join('')}</div>`
+    :`<div class="empty">${S.members.length?'—':L('none')}</div>`;
+  let tm=0,ta=0,tp=0,cow=0,buf=0,pay=0;
+  const rows=f.map(m=>{const c=calc(m);ta+=c.am;tp+=c.pm;tm+=c.total;pay+=c.milkAmt;
+    if(m.type=='cow')cow+=c.total;else buf+=c.total;
+    return`<tr><td>${esc(m.name)}</td><td>${mname(m.type)}</td><td>${fmt(c.am)}</td><td>${fmt(c.pm)}</td><td>${fmt(c.total)}</td><td>${fmt(c.rate)}</td><td>${fmt(c.milkAmt)}</td>
+    <td><button class="b s" onclick="openRecord(${m.id})">${L('details')}</button></td></tr>`}).join('');
+  $('allsum').innerHTML=f.length?`<div class="tw"><table><thead><tr><th>${L('mem')}</th><th>${L('mtype')}</th><th>${L('amT')}</th><th>${L('pmT')}</th><th>${L('tot')}</th><th>${L('rate')}</th><th>${L('mAmt')}</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>
+    <div class="sum" style="margin-top:14px">
+    <div class="st"><span>${L('tM')}</span><b>${nd(f.length)}</b></div><div class="st"><span>${L('amT')}</span><b>${fmt(ta)} L</b></div>
+    <div class="st"><span>${L('pmT')}</span><b>${fmt(tp)} L</b></div><div class="st"><span>${L('tot')}</span><b>${fmt(tm)} L</b></div>
+    <div class="st"><span>${L('tCow')}</span><b>${fmt(cow)} L</b></div><div class="st"><span>${L('tBuf')}</span><b>${fmt(buf)} L</b></div>
+    <div class="st big"><span>${L('tPay')}</span><b>रु. ${fmt(pay)}</b></div></div>`:`<div class="empty">—</div>`;
+}
+
+/* ---------- Add / Edit member popup ---------- */
+function openMember(id){
+  const m=id?getM(id):{name:'',phone:'',type:'cow'};
+  $('modal').innerHTML=`<div class="box"><h2>${id?L('edit'):L('add').replace('+ ','')}</h2>
+   <label>${L('name')}</label><input id="fn" value="${esc(m.name)}">
+   <label>${L('phone')}</label><input id="fp" type="tel" value="${esc(m.phone)}">
+   <label>${L('mtype')}</label><select id="ft"><option value="cow" ${m.type=='cow'?'selected':''}>${L('cow')} — रु. ${RATE.cow}</option><option value="buf" ${m.type=='buf'?'selected':''}>${L('buf')} — रु. ${RATE.buf}</option></select>
+   <div class="acts"><button class="b g" onclick="submitMember(${id||0})">${L('save')}</button><button class="b o" onclick="closeModal()">${L('cancel')}</button></div></div>`;
+  $('modal').classList.add('show');setTimeout(()=>$('fn').focus(),50);
+}
+function submitMember(id){
+  const name=$('fn').value.trim();if(!name){$('fn').focus();return}
+  if(id)updateMember(id,name,$('fp').value.trim(),$('ft').value);else addMember(name,$('fp').value.trim(),$('ft').value);
+  closeModal();render();
+}
+function closeModal(){$('modal').classList.remove('show')}
+function delMember(id){if(confirm(L('cf'))){deleteMember(id);render()}}
+function openRecord(id){cur=id;view='detail';X={bs:'',ad:''};render();scrollTo(0,0)}
+
+/* =====================================================
+   7. MEMBER PAGE: 32-day table, summary, other transactions
+   ===================================================== */
+function detailView(){
+  const m=getM();if(!m){view='list';return listView()}
+  const rows=m.days.map((d,i)=>`<tr><td>${nd(i+1)}</td>${dateCells('d',i,d)}
+   <td><input type="number" min="0" step="0.01" value="${d.am}" oninput="setDay(${i},'am',this.value)"></td>
+   <td><input type="number" min="0" step="0.01" value="${d.pm}" oninput="setDay(${i},'pm',this.value)"></td>
+   <td id="dt${i}"><b>${fmt(n(d.am)+n(d.pm))}</b></td>
+   <td><button class="b s d" title="${L('clr')}" onclick="clearDay(${i})">✕</button></td></tr>`).join('');
+  return`
+  <div class="card c2"><div class="bar"><div><h2 style="margin:0">${esc(m.name)}</h2><span class="tag ${m.type}">${mname(m.type)} · रु. ${nd(RATE[m.type])}/L</span></div>
+   <div class="acts" style="margin:0"><button class="b o" onclick="view='list';render()">${L('back')}</button>
+   <button class="b o" onclick="openMember(${m.id})">${L('edit')}</button>
+   <button class="b or" onclick="printRecord()">${L('print')}</button></div></div></div>
+  <div class="card"><h2>🥛 ${L('rec')}</h2>
+   <div class="fillbox"><input id="fillbs" placeholder="${L('start')}: ${L('ph')}"><button class="b s g" onclick="fillDates()">${L('fill')}</button></div>
+   <p style="color:var(--mut);font-size:14px;margin:0 0 8px">${L('hint')}</p>
+   <div class="tw" style="max-height:520px"><table><thead><tr><th>${L('day')}</th><th>${L('bs')}</th><th>${L('ad')}</th><th>${L('am')}</th><th>${L('pm')}</th><th>${L('dt')}</th><th></th></tr></thead><tbody>${rows}</tbody></table></div></div>
+  <div class="card c4"><h2>📋 ${L('msum')}</h2><div id="msum"></div></div>
+  <div class="card c3"><h2>🧾 ${L('other')}</h2>
+   <p style="color:var(--mut);font-size:14px;margin:0 0 8px">${L('hint')}</p>
+   <div class="tw"><table><thead><tr><th>${L('bs')}</th><th>${L('ad')}</th><th>${L('type')}</th><th>${L('qty')}</th><th>${L('unit')}</th><th>${L('amtR')}</th><th>${L('note')}</th><th></th></tr></thead>
+   <tbody>${m.tx.map(txRow).join('')}
+   <tr class="newrow">${dateCells('n',0,X,`<button class="b s o" style="margin-top:4px" onclick="todayFill()">${L('today')}</button>`)}
+    <td><select id="xt">${TXTYPES.map(t=>`<option value="${t}">${L(t)}</option>`).join('')}</select></td>
+    <td><input id="xq" type="number" step="0.01"></td><td><input id="xu" placeholder="kg / L / bag"></td>
+    <td><input id="xa" type="number" step="0.01"></td><td><input id="xn"></td>
+    <td><button class="b s g" onclick="addTx()">${L('addtx')}</button></td></tr></tbody></table></div></div>
+  <div class="card c2"><h2>⚖️ ${L('fin')}</h2><div id="fin"></div></div>`;
+}
+function txRow(t){return`<tr>${dateCells('t',t.id,t)}
+  <td><select onchange="setTx(${t.id},'type',this.value)">${TXTYPES.map(x=>`<option value="${x}" ${x==t.type?'selected':''}>${L(x)}</option>`).join('')}</select></td>
+  <td><input type="number" step="0.01" value="${t.qty}" oninput="setTx(${t.id},'qty',this.value)"></td>
+  <td><input value="${esc(t.unit)}" oninput="setTx(${t.id},'unit',this.value)"></td>
+  <td><input type="number" step="0.01" value="${t.amt}" oninput="setTx(${t.id},'amt',this.value)"></td>
+  <td><input value="${esc(t.note)}" oninput="setTx(${t.id},'note',this.value)"></td>
+  <td><button class="b s d" onclick="delTx(${t.id})">✕</button></td></tr>`}
+
+/* ---------- Editing: change data → save → totals refresh ---------- */
+function setDay(i,f,v){const m=getM();m.days[i][f]=v;saveData();
+  $('dt'+i).innerHTML=`<b>${fmt(n(m.days[i].am)+n(m.days[i].pm))}</b>`;renderSummary()}
+function clearDay(i){getM().days[i]=blankDay();saveData();render()}
+// Fill all 32 dates (both B.S. and A.D.) starting from one B.S. date
+function fillDates(){
+  const p=parseBS($('fillbs').value);if(!p){alert(L('badDate'));return}
+  const start=new Date(bsToAd(...p)+'T00:00:00Z').getTime(),m=getM();
+  m.days.forEach((d,i)=>{const dt=new Date(start+i*DAY);d.ad=dt.toISOString().slice(0,10);d.bs=adToBs(dt)||''});
+  saveData();render();
+}
+// "Today" button in the new-transaction row: fills both B.S. and A.D.
+function todayFill(){
+  const u=todayUTC();X.ad=u.toISOString().slice(0,10);X.bs=adToBs(u)||'';
+  $('bsn0').value=nd(X.bs);$('adn0').value=X.ad;
+}
+function addTx(){
+  const m=getM();if(!n($('xa').value)&&!$('xq').value){$('xa').focus();return}
+  m.tx.push({id:Date.now(),bs:X.bs,ad:X.ad,type:$('xt').value,qty:$('xq').value,unit:$('xu').value,amt:$('xa').value,note:$('xn').value});
+  X={bs:'',ad:''};saveData();render();
+}
+function setTx(id,f,v){getM().tx.find(x=>x.id==id)[f]=v;saveData();renderSummary()}
+function delTx(id){const m=getM();m.tx=m.tx.filter(x=>x.id!=id);saveData();render()}
+
+/* ---------- Summary + Final balance (recalculated on every change) ---------- */
+function renderSummary(){
+  const m=getM();if(!m)return;const c=calc(m);
+  $('msum').innerHTML=`<div class="sum">
+   <div class="st"><span>${L('amT')}</span><b>${fmt(c.am)} L</b></div><div class="st"><span>${L('pmT')}</span><b>${fmt(c.pm)} L</b></div>
+   <div class="st"><span>${L('tot')}</span><b>${fmt(c.total)} L</b></div><div class="st"><span>${L('mtype')}</span><b>${mname(m.type)}</b></div>
+   <div class="st"><span>${L('rate')}</span><b>रु. ${fmt(c.rate)}/L</b></div><div class="st big"><span>${L('amt')}</span><b>रु. ${fmt(c.milkAmt)}</b></div></div>`;
+  $('fin').innerHTML=finHTML(c);
+}
+// Final balance = Milk amount − (Dahi + Mohi + Paneer + Dana + Cash + Other)
+function finHTML(c){
+  const lines=TXTYPES.filter(t=>c.by[t]).map(t=>`<div class="row"><span>− ${L(t)}</span><span>रु. ${fmt(c.by[t])}</span></div>`).join('');
+  return`<div class="calc">
+   <div class="row"><span>${L('mAmt')}: ${fmt(c.total)} L × ${fmt(c.rate)}</span><b>रु. ${fmt(c.milkAmt)}</b></div>${lines}
+   <div class="row fin ${c.bal<0?'neg':''}"><span>${c.bal<0?L('owe'):L('pay')}</span><span>रु. ${fmt(Math.abs(c.bal))}</span></div></div>`;
+}
+
+/* =====================================================
+   8. PRINT — builds a clean sheet in #print, then prints
+   ===================================================== */
+function printRecord(){
+  const m=getM(),c=calc(m),tb='border="1" cellpadding="3" style="border-collapse:collapse;width:100%"';
+  $('print').innerHTML=`<h1 style="text-align:center;margin:0">पाथिभरा दूध डेरी</h1><p style="text-align:center;margin:0 0 10px">Pathibhara Dudh Dairy</p>
+  <h2>${L('mem')}: ${esc(m.name)} &nbsp;|&nbsp; ${L('mtype')}: ${mname(m.type)} &nbsp;|&nbsp; ${L('rate')}: रु. ${fmt(c.rate)}/L</h2>
+  <table ${tb}><tr><th>${L('day')}</th><th>${L('bs')}</th><th>${L('ad')}</th><th>${L('am')}</th><th>${L('pm')}</th><th>${L('dt')}</th></tr>
+  ${m.days.map((d,i)=>`<tr><td>${nd(i+1)}</td><td>${esc(nd(d.bs))}</td><td>${esc(d.ad)}</td><td>${d.am===''?'':fmt(n(d.am))}</td><td>${d.pm===''?'':fmt(n(d.pm))}</td><td>${fmt(n(d.am)+n(d.pm))}</td></tr>`).join('')}
+  <tr><td colspan="3"><b>${L('tot')}</b></td><td><b>${fmt(c.am)}</b></td><td><b>${fmt(c.pm)}</b></td><td><b>${fmt(c.total)}</b></td></tr></table>
+  <h3>${L('msum')}</h3><p>${L('amT')}: ${fmt(c.am)} L &nbsp; ${L('pmT')}: ${fmt(c.pm)} L &nbsp; ${L('tot')}: ${fmt(c.total)} L &nbsp; ${L('rate')}: रु. ${fmt(c.rate)} &nbsp; <b>${L('amt')}: रु. ${fmt(c.milkAmt)}</b></p>
+  ${m.tx.length?`<h3>${L('other')}</h3><table ${tb}><tr><th>${L('bs')}</th><th>${L('ad')}</th><th>${L('type')}</th><th>${L('qty')}</th><th>${L('amtR')}</th><th>${L('note')}</th></tr>
+  ${m.tx.map(t=>`<tr><td>${esc(nd(t.bs))}</td><td>${esc(t.ad)}</td><td>${L(t.type)}</td><td>${esc(t.qty)} ${esc(t.unit)}</td><td>${fmt(n(t.amt))}</td><td>${esc(t.note)}</td></tr>`).join('')}</table>`:''}
+  <h3>${L('fin')}</h3>${finHTML(c)}
+  <p style="text-align:center;margin-top:16px;font-size:11px">CREATED BY SAMYAM</p>`;
+  window.print();
+}
+
+/* =====================================================
+   9. START THE APP
+   ===================================================== */
+loadData();
+render();
+</script>
+</body>
+</html>
