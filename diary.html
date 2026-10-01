@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="ne" translate="no">
+<head>
+<meta charset="UTF-8">
+<meta name="google" content="notranslate">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>पाथिभरा दूध डेरी</title>
+<style>
+:root{--ink:#1d2b36;--mut:#5f7380;--line:#d9e4ec;--blue:#1e6fd9;--blue-d:#154fa0;--teal:#00a08a;--orange:#f28c28;--purple:#7e57c2;--red:#d6453d;--r:16px;--sh:0 3px 12px rgba(30,60,90,.12)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:flex;flex-direction:column;background:linear-gradient(160deg,#e8f3ff,#eafaf3 55%,#fff6e8);color:var(--ink);font-family:"Noto Sans Devanagari","Nirmala UI","Segoe UI",sans-serif;font-size:16px;line-height:1.5}
+#main{flex:1;width:100%;max-width:1240px;margin:auto;padding:14px}
+
+/* Disable Arrow Spin buttons on Number inputs */
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+/* MANDATORY POPUP FOR SYNC CODE */
+#syncOverlay{position:fixed;inset:0;background:rgba(15,23,42,0.95);z-index:99999;display:grid;place-items:center;padding:16px}
+.sync-card{background:#fff;border-radius:16px;padding:30px;width:100%;max-width:400px;text-align:center;box-shadow:0 10px 25px rgba(0,0,0,0.4)}
+.sync-card h2{margin-top:0;color:var(--blue-d);font-size:22px}
+.sync-card input{padding:12px;margin:15px 0;font-size:18px;text-align:center;border:2px solid var(--blue);border-radius:8px;width:100%;font-weight:bold;letter-spacing:1px}
+
+/* HEADER */
+header{background:linear-gradient(110deg,#154fa0,#1e88c9 55%,#00a08a);color:#fff;box-shadow:var(--sh)}
+header .in{max-width:1240px;margin:auto;padding:14px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.brand{display:flex;gap:12px;align-items:center}
+.logo{width:56px;height:56px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:30px;box-shadow:0 0 0 3px rgba(255,255,255,.4)}
+.brand h1{margin:0;font-size:26px;line-height:1.2}.brand small{opacity:.9}
+
+.right-header{display:flex;align-items:center;gap:12px;margin-left:auto;flex-wrap:wrap}
+
+.date{background:rgba(255,255,255,.18);padding:8px 16px;border-radius:14px;line-height:1.45;min-width:190px}
+.date .dn{font-size:13px;opacity:.95}.date .db{font-size:17px;font-weight:700}.date .da{font-size:12px}
+.lang button{border:0;background:rgba(255,255,255,.2);color:#fff;padding:7px 14px;cursor:pointer;font:inherit}
+.lang button:first-child{border-radius:20px 0 0 20px}.lang button:last-child{border-radius:0 20px 20px 0}
+.lang .on{background:#fff;color:var(--blue-d);font-weight:700}
+footer{text-align:center;padding:12px;background:linear-gradient(110deg,#154fa0,#00a08a);color:#fff;font-weight:700;letter-spacing:2px}
+
+/* CARDS & BUTTONS */
+.card{background:#fff;border-radius:var(--r);box-shadow:var(--sh);padding:18px;margin:16px 0;border-top:5px solid var(--blue)}
+.card.c2{border-color:var(--teal)}.card.c3{border-color:var(--orange)}.card.c4{border-color:var(--purple)}
+h2{margin:0 0 12px;font-size:20px}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+button.b{border:0;border-radius:10px;padding:9px 16px;cursor:pointer;font:inherit;background:var(--blue);color:#fff;display:inline-flex;align-items:center;gap:6px;font-weight:bold}
+button.b:hover{filter:brightness(1.1)}
+button.g{background:var(--teal)}button.or{background:var(--orange)}button.o{background:#fff;color:var(--blue);border:2px solid var(--blue)}button.d{background:#fff;color:var(--red);border:2px solid var(--red)}
+button.s{padding:6px 12px;font-size:14px}
+input,select{font:inherit;padding:8px 9px;border:2px solid var(--line);border-radius:9px;background:#fff;width:100%;min-width:0}
+input:focus,select:focus{outline:none;border-color:var(--blue)}
+.search{max-width:320px}
+
+/* TABLES & CARDS */
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:700px}
+th,td{padding:8px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+th{background:#dcecff;color:var(--blue-d);position:sticky;top:0}
+tbody tr:nth-child(even){background:#fafcff}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.mem{border-radius:var(--r);padding:14px;background:#f4faff;border-left:6px solid var(--teal)}
+.tag{display:inline-block;padding:2px 10px;border-radius:12px;background:#d7f4ec;color:#00785f;font-size:13px;font-weight:bold}
+.acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+
+.sum{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:12px}
+.st{border-radius:14px;padding:12px;background:#e3f2fd}.st span{display:block;color:var(--mut);font-size:14px}.st b{font-size:20px}
+.st.big{background:linear-gradient(120deg,#1e6fd9,#00a08a);color:#fff}.st.big span{color:#e3f4ff}
+.calc{background:#fffaf0;border:2px dashed var(--orange);border-radius:14px;padding:14px;line-height:2}
+.calc .fin{font-size:22px;font-weight:700;color:var(--teal);border-top:2px solid var(--line);margin-top:6px;padding-top:6px}
+.row{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+
+#modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99;place-items:center;padding:16px}
+#modal.show{display:grid}
+.box{background:#fff;border-radius:var(--r);padding:22px;width:100%;max-width:440px;border-top:6px solid var(--teal)}
+.empty{color:var(--mut);text-align:center;padding:20px}
+#print{display:none}
+@media print{body>*:not(#print){display:none!important}#print{display:block;padding:10px}}
+</style>
+
+<!-- Firebase SDK -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+  const firebaseConfig = {
+    databaseURL: "https://diary-32d56-default-rtdb.firebaseio.com",
+    projectId: "diary-32d56"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+
+  window.db = db;
+  window.fbRef = ref;
+  window.fbSet = set;
+  window.fbOnValue = onValue;
+</script>
+</head>
+<body translate="no">
+
+<!-- POP-UP ON WEB OPENING -->
+<div id="syncOverlay">
+  <div class="sync-card">
+    <h2>🔑 Enter Code to Sync</h2>
+    <p style="color:#666; font-size:14px; margin-bottom:5px;">पसलको Data Sync गर्न Code राख्नुहोस्:</p>
+    <input type="text" id="syncPasscode" placeholder="Enter Shop Code...">
+    <button class="b g" style="width:100%; justify-content:center; padding:12px; font-size:16px;" onclick="connectSyncKey()">Connect & Start</button>
+  </div>
+</div>
+
+<header><div class="in">
+  <div class="brand"><div class="logo">🥛</div><div><h1>पाथिभरा दूध डेरी</h1><small>Pathibhara Dudh Dairy</small></div></div>
+  
+  <div class="right-header">
+    <div class="date" id="dateBox"></div>
+    <div class="lang"><button id="btn-ne" onclick="setLang('ne')">नेपाली</button><button id="btn-en" onclick="setLang('en')">English</button></div>
+  </div>
+</div></header>
+
+<div id="main"></div>
+<footer>CREATED BY SAMYAM</footer>
+<div id="modal"></div>
+<div id="print"></div>
+
+<script>
+/* TRANSLATIONS */
+const T={
+add:['+ नयाँ व्यक्ति थप्नुहोस्','+ Add New Person'],search:['खोज्नुहोस्...','Search...'],
+members:['दूध बेच्ने किसान/सदस्यहरू','Milk Suppliers (Farmers)'],
+shareholders:['सेयरहोल्डर तथा ग्राहक (दूध बाहेकका सामान लग्ने)','Shareholders & Non-Milk Items Log'],
+all:['सबैको एकीकृत सारांश','All Members Summary'],
+name:['नाम','Name'],phone:['फोन (ऐच्छिक)','Phone (optional)'],mtype:['प्रकार / भूमिका','Role / Type'],
+cow:['गाईको दूध','Cow Milk'],buf:['भैंसीको दूध','Buffalo Milk'],sh:['सेयरहोल्डर/ग्राहक','Shareholder / Customer'],
+save:['💾 सेभ गर्नुहोस् (Save)','💾 Save Changes'],cancel:['रद्द','Cancel'],edit:['सम्पादन','Edit'],del:['मेटाउनुहोस्','Delete'],
+view:['रेकर्ड हेर्नुहोस्','View Record'],details:['विवरण हेर्नुहोस्','View Details'],back:['← फर्कनुहोस्','← Back'],
+none:['कुनै विवरण छैन।','No records found.'],rec:['दूध सङ्कलन रेकर्ड (३२ दिन)','32-Day Milk Record'],day:['दिन','Day'],
+bs:['मिति (वि.सं.)','Date (B.S.)'],ad:['मिति (ई.सं.)','Date (A.D.)'],am:['बिहान (लि.)','Morning (L)'],pm:['साँझ (लि.)','Evening (L)'],dt:['दैनिक जम्मा','Daily Total'],
+msum:['दूध सारांश','Milk Summary'],amT:['बिहान जम्मा','Morning Total'],pmT:['साँझ जम्मा','Evening Total'],tot:['जम्मा दूध','Total Milk'],rate:['दर','Rate'],amt:['जम्मा रकम','Total Amount'],
+other:['लगिएका सामान विवरण','Dairy Items Logged'],type:['सामानको प्रकार','Item Type'],qty:['परिमाण','Quantity'],unit:['एकाइ','Unit'],amtR:['मूल्य (रु.)','Price (Rs.)'],note:['विवरण','Notes'],
+addtx:['+ सामान थप्नुहोस्','+ Add Item'],today:['आज','Today'],dahi:['दही','Dahi'],mohi:['मोही','Mohi'],paneer:['पनीर','Paneer'],cash:['नगद (पेश्की)','Cash Advance'],dana:['दाना/चोकर','Dana/Feed'],oth:['अन्य','Other'],
+fin:['अन्तिम हिसाब-किताब','Final Calculation'],mAmt:['दूधको जम्मा रकम','Milk Amount'],pay:['डेरीले किसानलाई तिर्नुपर्ने','Dairy owes Supplier'],
+print:['🖨 सारांश प्रिन्ट','🖨 Print Summary'],mem:['नाम','Person'],ph:['२०८३/०६/१५','2083/06/15'],clr:['खाली','Clear'],start:['सुरु मिति (वि.सं.)','Start Date (B.S.)'],fill:['३२ दिनको मिति भर्नुहोस्','Auto-fill 32 Dates'],
+totItems:['जम्मा सामानको कुल मूल्य','Total Items Value']
+};
+
+const RATE={cow:65,buf:75,sh:0};
+const TXTYPES=['dahi','mohi','paneer','cash','dana','oth'];
+const WD=[['आइतबार','Sunday'],['सोमबार','Monday'],['मंगलबार','Tuesday'],['बुधबार','Wednesday'],['बिहीबार','Thursday'],['शुक्रबार','Friday'],['शनिबार','Saturday']];
+const BSN=[['बैशाख','Baisakh'],['जेठ','Jestha'],['असार','Ashadh'],['श्रावण','Shrawan'],['भदौ','Bhadra'],['असोज','Ashwin'],['कार्तिक','Kartik'],['मंसिर','Mangsir'],['पुष','Poush'],['माघ','Magh'],['फागुन','Falgun'],['चैत','Chaitra']];
+const ADN=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+/* B.S. CALENDAR ENGINE */
+const BS0=2082, BS1=2090;
+const BSM=[
+[31,31,32,31,31,30,30,30,29,30,30,30],[31,31,32,31,31,30,30,30,29,30,30,30],
+[31,31,32,31,31,30,30,30,29,30,30,30],[31,32,31,32,30,31,30,30,29,30,30,30],
+[30,32,31,32,31,30,30,30,29,30,30,30],[31,31,32,31,31,31,30,30,29,30,30,30],
+[30,31,32,32,30,31,30,30,29,30,30,30],[30,32,31,32,31,30,30,30,29,30,30,30],
+[30,32,31,32,31,30,30,30,29,30,30,30]
+];
+const BASE=Date.UTC(2025,3,14), DAY=864e5;
+const pad=x=>String(x).padStart(2,'0');
+const asc=s=>String(s??'').replace(/[०-९]/g,c=>'०१२३४५६७८९'.indexOf(c));
+
+function parseBS(s){
+  const p=asc(s).trim().split(/[\/\-.]/).map(Number);
+  if(p.length!=3||p.some(isNaN))return null;
+  const[y,m,d]=p,r=BSM[y-BS0];
+  return(!r||m<1||m>12||d<1||d>r[m-1])?null:[y,m,d];
+}
+function bsToAd(y,m,d){
+  let t=0;
+  for(let i=BS0;i<y;i++)t+=BSM[i-BS0].reduce((a,b)=>a+b,0);
+  for(let i=0;i<m-1;i++)t+=BSM[y-BS0][i];
+  return new Date(BASE+(t+d-1)*DAY).toISOString().slice(0,10);
+}
+function adToBs(dt){
+  let t=Math.round((dt-BASE)/DAY);if(t<0)return null;
+  for(let y=BS0;y<=BS1;y++)for(let m=0;m<12;m++){
+    if(t<BSM[y-BS0][m])return y+'/'+pad(m+1)+'/'+pad(t+1);
+    t-=BSM[y-BS0][m];
+  }
+  return null;
+}
+function todayUTC(){const t=new Date();return new Date(Date.UTC(t.getFullYear(),t.getMonth(),t.getDate()))}
+
+/* STATE & PASSCODE MANAGEMENT */
+const KEY='pathibhara_dairy_v2';
+let S={lang:'ne',members:[]};
+let view='list',cur=null,q='';
+let X={bs:'',ad:''};
+let isDirty=false;
+let currentPasscode="";
+
+function loadLocalData(){
+  try{
+    const d=JSON.parse(localStorage.getItem(KEY));
+    if(d&&d.members){ S.members=d.members; }
+  }catch(e){}
+}
+
+/* SYNC FUNCTION ON POPUP CLICK */
+window.connectSyncKey = function(){
+  const passcode = document.getElementById("syncPasscode").value.trim().toLowerCase();
+  if(!passcode){ alert("कृपया Code राख्नुहोस्!"); return; }
+  
+  currentPasscode = passcode;
+  document.getElementById("syncOverlay").style.display = "none";
+
+  if(window.db){
+    const syncRef = window.fbRef(window.db, 'shop_data/' + currentPasscode);
+    window.fbOnValue(syncRef, (snapshot) => {
+      const val = snapshot.val();
+      if(val && val.members){
+        S.members = val.members;
+        localStorage.setItem(KEY, JSON.stringify(S));
+        render();
+      }
+    });
+  }
+}
+
+/* SAVE DATA TO SYNCED CODE */
+function confirmAndSaveData(){
+  const m = getM();
+  let msg = "के तपाईँ यो विवरण सेभ गर्न पक्का हुनुहुन्छ?";
+  if(m){
+    const c = calc(m);
+    msg = `नाम: ${m.name}\nजम्मा दूध: ${c.total} L\nकुल रकम: रु. ${c.milkAmt}\n\nके यो विवरण सेभ र Sync गर्न पक्का हुनुहुन्छ?`;
+  }
+
+  if(confirm(msg)){
+    try{
+      localStorage.setItem(KEY,JSON.stringify(S));
+      if(currentPasscode && window.db){
+        const syncRef = window.fbRef(window.db, 'shop_data/' + currentPasscode);
+        window.fbSet(syncRef, { members: S.members });
+      }
+      isDirty=false;
+      alert("✅ सफलता: विवरण सेभ भयो!");
+      render();
+    }catch(e){ alert('Save Error: ' + e.message); }
+  }
+}
+
+const blankDay=()=>({bs:'',ad:'',am:'',pm:''});
+function addMember(name,phone,type){
+  S.members.push({id:Date.now(),name,phone,type,days:Array.from({length:32},blankDay),tx:[]});
+  isDirty=true;
+}
+function updateMember(id,name,phone,type){
+  const m=getM(id);m.name=name;m.phone=phone;m.type=type;
+  isDirty=true;
+}
+function deleteMember(id){
+  const m = getM(id);
+  if(confirm(`⚠️ DOUBLE CHECKING:\n\nके तपाईँ ${m ? m.name : 'यो व्यक्ति'} को सम्पूर्ण डाटा मेटाउन पक्का हुनुहुन्छ?`)){
+    S.members=S.members.filter(m=>m.id!==id);
+    isDirty=true;
+    confirmAndSaveData();
+  }
+}
+
+/* HELPERS */
+const L=k=>T[k][S.lang=='ne'?0:1];
+const n=v=>parseFloat(v)||0;
+const $=id=>document.getElementById(id);
+const getM=(id=cur)=>S.members.find(m=>m.id==id);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const nd=x=>S.lang=='ne'?String(x).replace(/\d/g,d=>'०१२३४५६७८९'[d]):String(x);
+const fmt=x=>nd((Math.round(x*100)/100).toLocaleString('en-IN'));
+const mname=t=>T[t][S.lang=='ne'?0:1];
+
+function calc(m){
+  const am=m.days.reduce((s,d)=>s+n(d.am),0),pm=m.days.reduce((s,d)=>s+n(d.pm),0);
+  const total=am+pm,rate=RATE[m.type]||0,milkAmt=total*rate;
+  const by={};m.tx.forEach(t=>by[t.type]=(by[t.type]||0)+n(t.amt));
+  const ded=Object.values(by).reduce((a,b)=>a+b,0);
+  return{am,pm,total,rate,milkAmt,by,ded,bal:milkAmt-ded};
+}
+
+function setDate(kind,idx,src,el){
+  const o=kind=='d'?getM().days[idx]:kind=='t'?getM().tx.find(x=>x.id==idx):X;
+  const id=kind+idx;
+  if(src=='bs'){
+    o.bs=asc(el.value);
+    const p=parseBS(o.bs);
+    if(p){ o.ad=bsToAd(...p); $('ad'+id).value=o.ad; }
+  }else{
+    o.ad=el.value;
+    const b=el.value?adToBs(new Date(el.value+'T00:00:00Z')):null;
+    if(b){ o.bs=b; $('bs'+id).value=nd(b); }
+  }
+  isDirty=true;
+}
+
+const dateCells=(kind,idx,o,extra='')=>`<td><input id="bs${kind}${idx}" value="${esc(nd(o.bs))}" placeholder="${L('ph')}" oninput="setDate('${kind}',${idx},'bs',this)">${extra}</td>
+<td><input type="date" id="ad${kind}${idx}" value="${esc(o.ad)}" oninput="setDate('${kind}',${idx},'ad',this)"></td>`;
+
+function updateHeader(){
+  const u=todayUTC(),bs=adToBs(u),i=S.lang=='ne'?0:1;
+  let b='';
+  if(bs){const[y,m,d]=bs.split('/').map(Number);b=(i?'B.S. ':'वि.सं. ')+nd(y)+' '+BSN[m-1][i]+' '+nd(d)}
+  const a=(i?'A.D. ':'ई.सं. ')+nd(u.getUTCDate())+' '+ADN[u.getUTCMonth()]+' '+nd(u.getUTCFullYear());
+  $('dateBox').innerHTML=`<div class="dn">📅 ${WD[u.getUTCDay()][i]}</div><div class="db">${b}</div><div class="da">${a}</div>`;
+  $('btn-ne').className=S.lang=='ne'?'on':'';$('btn-en').className=S.lang=='en'?'on':'';
+}
+
+function render(){
+  $('main').innerHTML=view=='list'?listView():detailView();
+  if(view=='list')renderLists();else renderSummary();
+  updateHeader();
+}
+function setLang(l){S.lang=l;render()}
+
+function listView(){return`
+  <div class="card c2"><div class="bar">
+    <input class="search" value="${esc(q)}" placeholder="🔍 ${L('search')}" oninput="q=this.value;renderLists()">
+    <div>
+      <button class="b or" onclick="confirmAndSaveData()">${L('save')}</button>
+      <button class="b g" onclick="openMember()">${L('add')}</button>
+    </div>
+  </div></div>
+  <div class="card"><h2>🐄 ${L('members')}</h2><div id="mlist"></div></div>
+  <div class="card c3"><h2>🤝 ${L('shareholders')}</h2><div id="shlist"></div></div>
+  <div class="card c4"><h2>📊 ${L('all')}</h2><div id="allsum"></div></div>`}
+
+function renderLists(){
+  const all=S.members.filter(m=>m.name.toLowerCase().includes(q.trim().toLowerCase()));
+  const farmers=all.filter(m=>m.type!=='sh');
+  const shareholders=all.filter(m=>m.type==='sh');
+
+  const cardHtml=m=>`
+    <div class="mem ${m.type}">
+      <h3>${esc(m.name)}</h3>
+      <span class="tag ${m.type}">${mname(m.type)}</span> ${m.phone?`<small>📞 ${esc(m.phone)}</small>`:''}
+      <div class="acts">
+        <button class="b s" onclick="openRecord(${m.id})">${L('view')}</button>
+        <button class="b s o" onclick="openMember(${m.id})">${L('edit')}</button>
+        <button class="b s d" onclick="deleteMember(${m.id})">${L('del')}</button>
+      </div>
+    </div>`;
+
+  $('mlist').innerHTML=farmers.length?`<div class="grid">${farmers.map(cardHtml).join('')}</div>`:`<div class="empty">${L('none')}</div>`;
+  $('shlist').innerHTML=shareholders.length?`<div class="grid">${shareholders.map(cardHtml).join('')}</div>`:`<div class="empty">${L('none')}</div>`;
+
+  let ta=0,tp=0,tm=0,pay=0;
+  const rows=all.map(m=>{
+    const c=calc(m);ta+=c.am;tp+=c.pm;tm+=c.total;pay+=c.milkAmt;
+    return`<tr>
+      <td><b>${esc(m.name)}</b></td>
+      <td><span class="tag ${m.type}">${mname(m.type)}</span></td>
+      <td>${m.type!=='sh'?fmt(c.am):'-'}</td>
+      <td>${m.type!=='sh'?fmt(c.pm):'-'}</td>
+      <td><b>${m.type!=='sh'?fmt(c.total)+' L':'-'}</b></td>
+      <td>${c.rate?fmt(c.rate):'-'}</td>
+      <td><b>${m.type!=='sh'?'रु. '+fmt(c.milkAmt):'रु. '+fmt(c.ded)}</b></td>
+      <td><button class="b s" onclick="openRecord(${m.id})">${L('details')}</button></td>
+    </tr>`
+  }).join('');
+
+  $('allsum').innerHTML=all.length?`<div class="tw"><table><thead><tr><th>${L('mem')}</th><th>${L('mtype')}</th><th>${L('amT')}</th><th>${L('pmT')}</th><th>${L('tot')}</th><th>${L('rate')}</th><th>${L('mAmt')}</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>
+    <div class="sum" style="margin-top:14px">
+    <div class="st"><span>जम्मा व्यक्ति</span><b>${nd(all.length)}</b></div>
+    <div class="st"><span>${L('tot')}</span><b>${fmt(tm)} L</b></div>
+    <div class="st big"><span>${L('mAmt')}</span><b>रु. ${fmt(pay)}</b></div>
+    </div>`:`<div class="empty">${L('none')}</div>`;
+}
+
+function openMember(id){
+  const m=id?getM(id):{name:'',phone:'',type:'cow'};
+  $('modal').innerHTML=`<div class="box"><h2>${id?L('edit'):L('add').replace('+ ','')}</h2>
+   <label>${L('name')}</label><input id="fn" value="${esc(m.name)}">
+   <label>${L('phone')}</label><input id="fp" type="tel" value="${esc(m.phone)}">
+   <label>${L('mtype')}</label>
+   <select id="ft">
+     <option value="cow" ${m.type=='cow'?'selected':''}>${L('cow')} (रु. ${RATE.cow})</option>
+     <option value="buf" ${m.type=='buf'?'selected':''}>${L('buf')} (रु. ${RATE.buf})</option>
+     <option value="sh" ${m.type=='sh'?'selected':''}>${L('sh')}</option>
+   </select>
+   <div class="acts"><button class="b g" onclick="submitMember(${id||0})">${L('save')}</button><button class="b o" onclick="closeModal()">${L('cancel')}</button></div></div>`;
+  $('modal').classList.add('show');setTimeout(()=>$('fn').focus(),50);
+}
+function submitMember(id){
+  const name=$('fn').value.trim();if(!name){$('fn').focus();return}
+  if(id)updateMember(id,name,$('fp').value.trim(),$('ft').value);
+  else addMember(name,$('fp').value.trim(),$('ft').value);
+  closeModal();
+  confirmAndSaveData();
+}
+function closeModal(){$('modal').classList.remove('show')}
+function openRecord(id){cur=id;view='detail';X={bs:'',ad:''};render();scrollTo(0,0)}
+
+/* DETAIL / RECORD VIEW */
+function detailView(){
+  const m=getM();if(!m){view='list';return listView()}
+  const isMilkUser=m.type!=='sh';
+
+  const rows=m.days.map((d,i)=>`<tr><td>${nd(i+1)}</td>${dateCells('d',i,d)}
+   <td><input type="number" min="0" step="0.01" value="${d.am}" oninput="setDay(${i},'am',this.value)"></td>
+   <td><input type="number" min="0" step="0.01" value="${d.pm}" oninput="setDay(${i},'pm',this.value)"></td>
+   <td id="dt${i}"><b>${fmt(n(d.am)+n(d.pm))}</b></td>
+   <td><button class="b s d" title="${L('clr')}" onclick="clearDay(${i})">✕</button></td></tr>`).join('');
+
+  return`
+  <div class="card c2"><div class="bar"><div><h2 style="margin:0">${esc(m.name)}</h2><span class="tag ${m.type}">${mname(m.type)} ${m.type!='sh'?`· रु. ${nd(RATE[m.type])}/L`:''}</span></div>
+   <div class="acts" style="margin:0">
+    <button class="b or" onclick="confirmAndSaveData()">${L('save')}</button>
+    <button class="b o" onclick="view='list';render()">${L('back')}</button>
+    <button class="b o" onclick="openMember(${m.id})">${L('edit')}</button>
+    <button class="b g" onclick="printRecord()">${L('print')}</button>
+   </div></div></div>
+
+  ${isMilkUser?`
+  <div class="card"><h2>🥛 ${L('rec')}</h2>
+   <div style="margin-bottom:10px"><input id="fillbs" placeholder="${L('start')}:${L('ph')}" style="width:200px"> <button class="b s g" onclick="fillDates()">${L('fill')}</button></div>
+   <div class="tw" style="max-height:480px"><table><thead><tr><th>${L('day')}</th><th>${L('bs')}</th><th>${L('ad')}</th><th>${L('am')}</th><th>${L('pm')}</th><th>${L('dt')}</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>
+   <div style="margin-top:15px; text-align:right;">
+      <button class="b or" style="padding:12px 24px; font-size:16px;" onclick="confirmAndSaveData()">${L('save')}</button>
+   </div>
+   </div>
+  <div class="card c4"><h2>📋 ${L('msum')}</h2><div id="msum"></div></div>`:''}
+
+  <div class="card c3"><h2>🧾 ${L('other')}</h2>
+   <div class="tw"><table><thead><tr><th>${L('bs')}</th><th>${L('ad')}</th><th>${L('type')}</th><th>${L('qty')}</th><th>${L('unit')}</th><th>${L('amtR')}</th><th>${L('note')}</th><th></th></tr></thead>
+   <tbody>${m.tx.map(txRow).join('')}
+   <tr style="background:#fff6e6">${dateCells('n',0,X,`<button class="b s o" style="margin-top:4px" onclick="todayFill()">${L('today')}</button>`)}
+    <td><select id="xt">${TXTYPES.map(t=>`<option value="${t}">${L(t)}</option>`).join('')}</select></td>
+    <td><input id="xq" type="number" step="0.01" placeholder="0.00"></td><td><input id="xu" placeholder="kg/L/ब्याग"></td>
+    <td><input id="xa" type="number" step="0.01" placeholder="रु. 0"></td><td><input id="xn" placeholder="कैफियत"></td>
+    <td><button class="b s g" onclick="addTx()">${L('addtx')}</button></td></tr></tbody></table></div>
+    <div style="margin-top:15px; text-align:right;">
+      <button class="b or" style="padding:12px 24px; font-size:16px;" onclick="confirmAndSaveData()">${L('save')}</button>
+    </div>
+  </div>
+
+  <div class="card c2"><h2>📊 ${isMilkUser?L('fin'):L('totItems')}</h2><div id="fin"></div></div>`;
+}
+
+function txRow(t){return`<tr>${dateCells('t',t.id,t)}
+  <td><select onchange="setTx(${t.id},'type',this.value)">${TXTYPES.map(x=>`<option value="${x}" ${x==t.type?'selected':''}>${L(x)}</option>`).join('')}</select></td>
+  <td><input type="number" step="0.01" value="${t.qty}" oninput="setTx(${t.id},'qty',this.value)"></td>
+  <td><input value="${esc(t.unit)}" oninput="setTx(${t.id},'unit',this.value)"></td>
+  <td><input type="number" step="0.01" value="${t.amt}" oninput="setTx(${t.id},'amt',this.value)"></td>
+  <td><input value="${esc(t.note)}" oninput="setTx(${t.id},'note',this.value)"></td>
+  <td><button class="b s d" onclick="delTx(${t.id})">✕</button></td></tr>`}
+
+function setDay(i,f,v){const m=getM();m.days[i][f]=v;isDirty=true;
+  $('dt'+i).innerHTML=`<b>${fmt(n(m.days[i].am)+n(m.days[i].pm))}</b>`;renderSummary()}
+function clearDay(i){getM().days[i]=blankDay();isDirty=true;render()}
+
+function fillDates(){
+  const p=parseBS($('fillbs').value);if(!p){alert("गलत मिति!");return}
+  const start=new Date(bsToAd(...p)+'T00:00:00Z').getTime(),m=getM();
+  m.days.forEach((d,i)=>{const dt=new Date(start+i*DAY);d.ad=dt.toISOString().slice(0,10);d.bs=adToBs(dt)||''});
+  isDirty=true;render();
+}
+
+function todayFill(){
+  const u=todayUTC();X.ad=u.toISOString().slice(0,10);X.bs=adToBs(u)||'';
+  $('bsn0').value=nd(X.bs);$('adn0').value=X.ad;
+}
+
+function addTx(){
+  const m=getM();if(!n($('xa').value)&&!$('xq').value){$('xa').focus();return}
+  m.tx.push({id:Date.now(),bs:X.bs,ad:X.ad,type:$('xt').value,qty:$('xq').value,unit:$('xu').value,amt:$('xa').value,note:$('xn').value});
+  X={bs:'',ad:''};isDirty=true;render();
+}
+function setTx(id,f,v){getM().tx.find(x=>x.id==id)[f]=v;isDirty=true;renderSummary()}
+function delTx(id){if(confirm("यो सामानको रेकर्ड हटाउने?")){const m=getM();m.tx=m.tx.filter(x=>x.id!=id);isDirty=true;render()}}
+
+function renderSummary(){
+  const m=getM();if(!m)return;const c=calc(m);
+  if($('msum')){$('msum').innerHTML=`<div class="sum">
+     <div class="st"><span>${L('amT')}</span><b>${fmt(c.am)} L</b></div><div class="st"><span>${L('pmT')}</span><b>${fmt(c.pm)} L</b></div>
+     <div class="st"><span>${L('tot')}</span><b>${fmt(c.total)} L</b></div>
+     <div class="st"><span>${L('rate')}</span><b>रु. ${fmt(c.rate)}/L</b></div><div class="st big"><span>${L('amt')}</span><b>रु. ${fmt(c.milkAmt)}</b></div></div>`;
+  }
+  $('fin').innerHTML=finHTML(c,m.type);
+}
+
+function finHTML(c,type){
+  const lines=TXTYPES.filter(t=>c.by[t]).map(t=>`<div class="row"><span>• ${L(t)}</span><span>रु. ${fmt(c.by[t])}</span></div>`).join('');
+  const isSh = type==='sh';
+
+  if(isSh){
+    return`<div class="calc">
+     ${lines || '<div class="row"><span>कुनै सामान लगिएको छैन।</span></div>'}
+     <div class="row fin"><span>${L('totItems')}</span><span>रु. ${fmt(c.ded)}</span></div></div>`;
+  }
+
+  return`<div class="calc">
+   <div class="row"><span>${L('mAmt')}: ${fmt(c.total)} L × ${fmt(c.rate)}</span><b>रु. ${fmt(c.milkAmt)}</b></div>
+   ${lines}
+   <div class="row fin"><span>${L('pay')}</span><span>रु. ${fmt(Math.max(0, c.bal))}</span></div></div>`;
+}
+
+function printRecord(){
+  const m=getM(),c=calc(m),tb='border="1" cellpadding="4" style="border-collapse:collapse;width:100%"';
+  $('print').innerHTML=`<h1 style="text-align:center;margin:0">पाथिभरा दूध डेरी</h1>
+  <h2>${L('mem')}: ${esc(m.name)} &nbsp;|&nbsp; ${L('mtype')}: ${mname(m.type)}</h2>
+  ${m.tx.length?`<h3>${L('other')}</h3><table ${tb}><tr><th>${L('bs')}</th><th>${L('ad')}</th><th>${L('type')}</th><th>${L('qty')}</th><th>${L('amtR')}</th><th>${L('note')}</th></tr>${m.tx.map(t=>`<tr><td>${esc(nd(t.bs))}</td><td>${esc(t.ad)}</td><td>${L(t.type)}</td><td>${esc(t.qty)} ${esc(t.unit)}</td><td>${fmt(n(t.amt))}</td><td>${esc(t.note)}</td></tr>`).join('')}</table>`:''}
+  <h3>${m.type==='sh'?L('totItems'):L('fin')}</h3>${finHTML(c,m.type)}
+  <p style="text-align:center;margin-top:16px;font-size:11px">CREATED BY SAMYAM</p>`;
+  window.print();
+}
+
+/* SMART ARROW NAVIGATION & PREVENT NUMBER SPINNING */
+document.addEventListener('keydown', function(e) {
+  const active = document.activeElement;
+  if (!active || (active.tagName !== 'INPUT' && active.tagName !== 'SELECT')) return;
+
+  const isArrowKey = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Enter'].includes(e.key);
+  
+  if (isArrowKey) {
+    if (active.type === 'number' && (e.key === 'ArrowUp' || e.key === 'ArrowDown')) {
+      e.preventDefault(); // Number बढाउने/घटाउने काम रोक्ने
+    }
+
+    const table = active.closest('table');
+    if (!table) return;
+
+    const cell = active.closest('td');
+    if (!cell) return;
+
+    const row = cell.parentElement;
+    const colIndex = Array.from(row.children).indexOf(cell);
+    const tbody = row.parentElement;
+    const rowIndex = Array.from(tbody.children).indexOf(row);
+
+    let nextInput = null;
+
+    if (e.key === 'ArrowDown' || e.key === 'Enter') {
+      const nextRow = tbody.children[rowIndex + 1];
+      if (nextRow && nextRow.children[colIndex]) {
+        nextInput = nextRow.children[colIndex].querySelector('input, select');
+      }
+    } else if (e.key === 'ArrowUp') {
+      const prevRow = tbody.children[rowIndex - 1];
+      if (prevRow && prevRow.children[colIndex]) {
+        nextInput = prevRow.children[colIndex].querySelector('input, select');
+      }
+    } else if (e.key === 'ArrowRight') {
+      if (active.selectionEnd === active.value.length || active.type === 'number' || active.type === 'date') {
+        const nextCell = row.children[colIndex + 1];
+        if (nextCell) nextInput = nextCell.querySelector('input, select');
+      }
+    } else if (e.key === 'ArrowLeft') {
+      if (active.selectionStart === 0 || active.type === 'number' || active.type === 'date') {
+        const prevCell = row.children[colIndex - 1];
+        if (prevCell) nextInput = prevCell.querySelector('input, select');
+      }
+    }
+
+    if (nextInput) {
+      e.preventDefault();
+      nextInput.focus();
+      if (nextInput.select && nextInput.type !== 'date') nextInput.select();
+    }
+  }
+});
+
+loadLocalData();
+render();
+</script>
+</body>
+</html>
